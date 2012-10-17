@@ -1,14 +1,13 @@
+(function() {
+  var _ref;
 
-window.carpricefinder = {
-  Models: {},
-  Collections: {},
-  Views: {},
-  Routers: {},
-  init: function() {
-    console.log('Hello from Backbone!');
-  }
-};
+  this.app = (_ref = window.app) != null ? _ref : {};
 
-$(document).ready(function(){
-  carpricefinder.init();
-});
+  jQuery(function() {
+    this.app.router = new this.app.CarPriceFinderRouter;
+    return Backbone.history.start({
+      pushState: true
+    });
+  });
+
+}).call(this);

@@ -18,8 +18,8 @@ module.exports = function( grunt ) {
     // Coffee to JS compilation
     coffee: {
       dist: {
-        src: 'app/scripts/**/*.coffee',
-        dest: 'app/scripts'
+        src: 'src/**/*.coffee',
+        dest: 'app/scripts/*.js'
       }
     },
 

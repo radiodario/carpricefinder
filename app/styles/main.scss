@@ -1,1 +1,44 @@
 @import "compass_twitter_bootstrap";
+@import "compass_twitter_bootstrap_responsive";
+
+
+body {
+	background-image: url('/images/whitediamond.png')
+}
+
+
+div#contents{
+
+}
+
+div#headerspace {
+width:100%;
+margin-top:20%;
+}
+
+div#title {
+	
+margin: 0 auto;
+
+}
+
+/* Footer
+-------------------------------------------------- */
+
+.footer {
+  padding: 70px 0;
+  margin-top: 70px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+}
+.footer p {
+  margin-bottom: 0;
+  color: #777;
+}
+.footer-links {
+  margin: 10px 0;
+}
+.footer-links li {
+  display: inline;
+  margin-right: 10px;
+}
