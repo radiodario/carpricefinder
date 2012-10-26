@@ -40,9 +40,7 @@ margin: 0 auto;
 }
 
 h1#titleText{
-	@media screen and (max-width: 767px) {
-		text-align: center;
-	}
+
 }
 
 
@@ -50,10 +48,7 @@ p.price {
 	font-size: 4em;
 	font-weight: bold;
 	height:auto;
-	display:block;
-		@media screen and (max-width: 767px) {
-		text-align: center;
-	}
+	
 }
 
 .thumbnails > li {

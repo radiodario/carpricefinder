@@ -25,8 +25,7 @@
         _.bindAll(this);
         this.titleView = new TitleView();
         this.searchView = new SearchView();
-        this.resultsView = new ResultsView();
-        return this.render();
+        return this.resultsView = new ResultsView();
       };
 
       AppView.prototype.render = function() {
@@ -161,7 +160,6 @@
           classifiedView = new ClassifiedView({
             model: classified
           });
-          console.log(classified, classifiedView, $('ul'), this.el);
           $(this.el).append(classifiedView.render().el);
         }
         return this;
@@ -200,27 +198,46 @@
         return PriceChartView.__super__.constructor.apply(this, arguments);
       }
 
-      PriceChartView.prototype.tagName = 'div';
+      PriceChartView.prototype.el = '#graph';
 
       PriceChartView.prototype.initialize = function() {
+        $(window).on("resize.app", _.bind(this.update, this));
         return this;
       };
 
       PriceChartView.prototype.render = function() {
+        var callback, that;
         $(this.el).empty();
         this.drawChart();
+        that = this;
+        callback = function() {
+          return that.update();
+        };
+        setTimeout(callback, 1);
         return this;
       };
 
       PriceChartView.prototype.drawChart = function() {
-        var formatDate, that;
-        that = this;
+        var formatDate;
         formatDate = d3.time.format("%b %Y");
         this.chart = app.priceChart().x(function(d) {
           return formatDate.parse(d.date);
         }).y(function(d) {
           return +d.price;
         });
+        this.draw();
+        return this;
+      };
+
+      PriceChartView.prototype.update = function() {
+        this.chart.width($('#graph').width() - 2);
+        this.draw();
+        return this;
+      };
+
+      PriceChartView.prototype.draw = function() {
+        var that;
+        that = this;
         d3.csv('clioPrices.csv', function(data) {
           d3.select("#graph").datum(data).call(that.chart);
           return this;

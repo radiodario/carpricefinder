@@ -4,18 +4,18 @@ priceChart = () ->
 	margin =
 		top: 20
 		right: 20
-		bottom: 30
+		bottom: 70
 		left: 50
-	width = 500
-	height = 345
+	width = 460
+	height = 312
 	xValue = (d) -> d[0]
 	yValue = (d) -> d[1]
 	xScale = d3.time.scale()
 	yScale = d3.scale.linear()
 	xAxis = d3.svg.axis().scale(xScale).orient("bottom")
 	yAxis = d3.svg.axis().scale(yScale).orient("left")
-	yAxisTitle = "Price (£)"
-	line = d3.svg.line()
+	yAxisTitle = "Approximate Price (£)"
+	line = d3.svg.line().interpolate("bundle")
 
 	X = (d) ->
 		xScale(d[0])
@@ -31,8 +31,6 @@ priceChart = () ->
 
 			data = data.map (d, i) ->
 				[xValue.call(data, d, i), yValue.call(data, d, i)]
-
-			console.log data
 
 			xScale
 				.domain(d3.extent(data, (d) -> d[0]))
@@ -67,10 +65,20 @@ priceChart = () ->
 			g.select(".x.axis")
 				.attr("transform", "translate(0," + yScale.range()[0] + ")")
 				.call(xAxis)
+			# orient x-axis labels
+			g.selectAll(".x.axis text")
+				.attr("transform", "rotate(-45)")
+				.style("text-anchor", "end")
+				.attr("dx", "-.61em")
+				# .attr("dy", "-.11em")
 
 			# y axis
 			g.select(".y.axis")
 				.call(yAxis)
+				.append("g")
+					.attr("class", "title")
+
+			g.select(".title")
 				.append("text")
 				.attr("transform", "rotate(-90)")
 				.attr("y", 6)

@@ -6,11 +6,11 @@
     margin = {
       top: 20,
       right: 20,
-      bottom: 30,
+      bottom: 70,
       left: 50
     };
-    width = 500;
-    height = 345;
+    width = 460;
+    height = 312;
     xValue = function(d) {
       return d[0];
     };
@@ -21,8 +21,8 @@
     yScale = d3.scale.linear();
     xAxis = d3.svg.axis().scale(xScale).orient("bottom");
     yAxis = d3.svg.axis().scale(yScale).orient("left");
-    yAxisTitle = "Price (£)";
-    line = d3.svg.line();
+    yAxisTitle = "Approximate Price (£)";
+    line = d3.svg.line().interpolate("bundle");
     X = function(d) {
       return xScale(d[0]);
     };
@@ -37,7 +37,6 @@
         data = data.map(function(d, i) {
           return [xValue.call(data, d, i), yValue.call(data, d, i)];
         });
-        console.log(data);
         xScale.domain(d3.extent(data, function(d) {
           return d[0];
         })).range([0, width - margin.left - margin.right]);
@@ -53,7 +52,9 @@
         g = svg.select("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         g.select(".line").attr("d", line);
         g.select(".x.axis").attr("transform", "translate(0," + yScale.range()[0] + ")").call(xAxis);
-        g.select(".y.axis").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(yAxisTitle);
+        g.selectAll(".x.axis text").attr("transform", "rotate(-45)").style("text-anchor", "end").attr("dx", "-.61em");
+        g.select(".y.axis").call(yAxis).append("g").attr("class", "title");
+        g.select(".title").append("text").attr("transform", "rotate(-90)").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(yAxisTitle);
         return this;
       });
       return this;

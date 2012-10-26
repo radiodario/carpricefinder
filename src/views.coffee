@@ -10,7 +10,6 @@ jQuery ->
 			@titleView = new TitleView()
 			@searchView = new SearchView()
 			@resultsView = new ResultsView()
-			@render()
 		render: ->
 			$(@el).html @template()
 			@$('#contents').append @titleView.render().el
@@ -77,7 +76,6 @@ jQuery ->
 			$(@el).empty() # @template()
 			for classified in app.classifieds.models
 				classifiedView = new ClassifiedView (model: classified)
-				console.log classified, classifiedView, $('ul'), @el
 				$(@el).append classifiedView.render().el
 			@
 
@@ -90,20 +88,32 @@ jQuery ->
 			@
 
 	class PriceChartView extends Backbone.View
-		tagName: 'div'
+		el: '#graph'
 		initialize: ->
+			$(window).on("resize.app", _.bind(@update, @))
 			@
 		render: ->
 			$(@el).empty()
 			@drawChart()
+			that = @
+			callback = () -> that.update()
+			setTimeout callback, 1
 			@
 		drawChart: ->
-			that = @
 			formatDate = d3.time.format("%b %Y")
 			@chart = app.priceChart()
 				.x((d) -> formatDate.parse(d.date))
 				.y((d) -> +d.price)
+			@draw()
+			@
 
+		update:->
+			@chart
+				.width($('#graph').width()-2)
+			@draw()
+			@
+		draw: ->
+			that = @
 			d3.csv('clioPrices.csv', (data) ->
 					d3.select("#graph")
 						.datum(data)
