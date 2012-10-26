@@ -1,19 +1,36 @@
 @import "compass_twitter_bootstrap";
 @import "compass_twitter_bootstrap_responsive";
 
+html, body {
+	height: 100%;
+}
 
 body {
-	background-image: url('/images/whitediamond.png')
+	background-image: url('/images/dark_leather.png');
+	@media screen and (max-width: 767px) {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
 }
+
+
 
 
 div#contents{
-
+	background:rgba(250, 250, 250, 0.9);
+	-webkit-box-shadow: 0px 0px 50px 0px rgba(50, 50, 50, 0.3);
+	box-shadow: 0px 0px 50px 0px rgba(50, 50, 50, 0.3);
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+		@media screen and (max-width: 767px) {
+		padding-left: 5px;
+		padding-right: 10px;
+	}
 }
 
 div#headerspace {
-width:100%;
-margin-top:20%;
+	width:100%;
+	margin-top:20%;
 }
 
 div#title {
@@ -21,6 +38,31 @@ div#title {
 margin: 0 auto;
 
 }
+
+h1#titleText{
+	@media screen and (max-width: 767px) {
+		text-align: center;
+	}
+}
+
+
+p.price {
+	font-size: 4em;
+	font-weight: bold;
+	height:auto;
+	display:block;
+		@media screen and (max-width: 767px) {
+		text-align: center;
+	}
+}
+
+.thumbnails > li {
+	@media screen and (min-width: 1200px) {
+	margin-left: 20px;
+	}
+}
+
+
 
 /* Footer
 -------------------------------------------------- */

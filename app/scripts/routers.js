@@ -14,19 +14,28 @@
 
       CarPriceFinderRouter.prototype.routes = {
         '': 'homeScreen',
-        '/search/:make/:model/:year/:mileage': 'search'
+        '/search/:make/:model/:year/:mileage': 'search',
+        'searchTest': 'searchTest'
       };
 
       CarPriceFinderRouter.prototype.initialize = function() {
-        return this.view = new app.AppView();
+        this.view = new app.AppView();
+        return this.view.render();
       };
 
       CarPriceFinderRouter.prototype.homeScreen = function() {
         console.log('rendering');
-        return this.view.render();
+        return this.view.renderControls();
       };
 
-      CarPriceFinderRouter.prototype.search = function(make, model, year, mileage) {};
+      CarPriceFinderRouter.prototype.searchTest = function() {
+        console.log('rendering results');
+        return this.view.search();
+      };
+
+      CarPriceFinderRouter.prototype.search = function(make, model, year, mileage) {
+        return this.view.search(make, model, year, mileage);
+      };
 
       return CarPriceFinderRouter;
 

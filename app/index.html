@@ -13,64 +13,124 @@
 
     </head>
     <body>
-
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
 
+
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/bootstrap/bootstrap-transition.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
-        <script src="scripts/views.js"></script>
         <script src="scripts/models.js"></script>
         <script src="scripts/collections.js"></script>
+        <script src="scripts/views.js"></script>
         <script src="scripts/routers.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 
         <!-- Templates -->
         <script type="text/template" id="homeview-template">
-        <div id="contents" class="container">
-            <div id="headerspace" class="hidden-phone"></div>
-            <div id="title">
-            <h1>Car Price Finder <img src="/images/car.svg" class="hidden-phone"></img></h1>
-            <p class="lead hidden-phone">
-                Search the market value of any second-hand car
-            </p>
+            <div id="contents" class="container">
             </div>
+           
+        </script>
+
+        <script type="text/template" id="title-template">
+            <div id="headerspace" class="hidden-phone"></div>
+            <div id="title" class="row">
+                <div class="offset1">
+                    <h1 id="titleText">Car Price Finder <img src="/images/car.svg" class="hidden-phone"></img></h1>
+                    <p class="lead hidden-phone">
+                        Search the market value of any second-hand car
+                    </p>
+                </div>
+            </div>
+
+        </script>
+        
+        <script type="text/template" id="search-template"> 
             <div class="row">
-                <div class="span3">
+                <div class="span1 offset1">
+                    <h4>Year:<h4/>
+                    <select id='year' class="span1"></select>
+                </div>
+                <div class="span2">
                     <h4>Make:</h4>
                     
-                    <select id='make' class="span3"></select>
+                    <select id='make' class="span2"></select>
                     
                 </div>
-                <div class="span3">
+                <div class="span2">
                     <h4>Model:</h4>
-                    <select id='model' class="span3"></select>
+                    <select id='model' class="span2"></select>
                     
                 </div>
-                <div class="span3">
-                    <h4>Year:<h4/>
-                    <select id='year' class="span3"></select>
-                </div>
-                <div class="span3">
+                <div class="span2">
                     <h4>Mileage:</h4>
-                    <select id='mileage' class="span3"></select>
+                    <select id='mileage' class="span2"></select>
                     </label>
                 </div>
                 
             </div>
-            <button id="search" class="btn btn-block btn-inverse btn-large">Search!</button>
-           
-        </div>
-
+            <div class="row">
+                <div class="span7 offset1">
+                <button id="search" class="btn btn-block btn-inverse btn-large">Search!</button>
+                </div>
+            </div>
         </script>
-    
+
+        <script type="text/template" id="results-template">
+            <div class="span11 offset1">
+                <div class="row">
+                    <div id="carInfo" class="span5">
+                        <p class="lead">
+                        1999 Renault Clio <span class="hidden-phone">with</span> 100,000 miles
+                        </p>
+                        <p class="price">£900</p>
+                        <p class="small">
+                            (approx price)
+                        </p>
+                        <div id="graph" class="">
+                            <img src="http://placehold.it/500x345" alt="">
+                        </div>
+                    </div>                
+                    <div id="carImage" class="span6">
+                        <img src="/images/clio.png" class="img-polaroid">
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div id="priceHistoryGraph" class="span6"></div>
+                    <div id="priceDistributionGraph" class="span6"></div>
+                </div>
+                <div class="row">
+                    <div id="classifiedsTitle" class="span12">
+                    <h3>Classified Ads</h3>
+                    </div>
+                <div class="row">
+                    <div class="span11 offset1">
+                    <div id="classifiedsContainer" class="row"></div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/template" id="classified-template">
+            <div class="thumbnail">
+                <img src="http://placehold.it/300x200" alt="">
+                <div class="caption">
+                <h4><%= price %></h4>
+                <p><%= description %></p>
+                <p><a href="<%= link %>" class="btn btn-primary">go!</a></p>
+                </div>
+            </div>
+        </script>
+
+
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
