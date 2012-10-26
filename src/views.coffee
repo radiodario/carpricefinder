@@ -25,7 +25,9 @@ jQuery ->
 			@$('#headerspace').animate {'margin-top': '20px'}, ->
 				#hide the search controls
 				console.log $('#searchControls')
+				$('#subTitle').fadeOut()
 				if $('#searchControls').length > 0
+					$('#subTitle').fadeOut()
 					$('#searchControls').fadeOut view.renderResults
 				else
 					view.renderResults()
@@ -58,10 +60,12 @@ jQuery ->
 		id: 'resultsView'
 		initialize: ->
 			@classifieds = new ClassifiedsView()
+			@priceChart = new PriceChartView()
 			@
 		render: ->
 			$(@el).html @template()
 			@$('#classifiedsContainer').html @classifieds.render().el
+			@priceChart.render()
 			@
 
 	class ClassifiedsView extends Backbone.View
@@ -84,6 +88,33 @@ jQuery ->
 		render:->
 			$(@el).html @template(@model.toJSON())
 			@
+
+	class PriceChartView extends Backbone.View
+		tagName: 'div'
+		initialize: ->
+			@
+		render: ->
+			$(@el).empty()
+			@drawChart()
+			@
+		drawChart: ->
+			that = @
+			formatDate = d3.time.format("%b %Y")
+			@chart = app.priceChart()
+				.x((d) -> formatDate.parse(d.date))
+				.y((d) -> +d.price)
+
+			d3.csv('clioPrices.csv', (data) ->
+					d3.select("#graph")
+						.datum(data)
+						.call(that.chart)
+					@
+				)
+			@
+
+
+
+
 
 
 	#	class SparkLineView extends Backbone.View

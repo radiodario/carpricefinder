@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   jQuery(function() {
-    var AppView, ClassifiedView, ClassifiedsView, ResultsView, SearchView, TitleView, _ref;
+    var AppView, ClassifiedView, ClassifiedsView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
     AppView = (function(_super) {
 
       __extends(AppView, _super);
@@ -47,7 +47,9 @@
           'margin-top': '20px'
         }, function() {
           console.log($('#searchControls'));
+          $('#subTitle').fadeOut();
           if ($('#searchControls').length > 0) {
+            $('#subTitle').fadeOut();
             $('#searchControls').fadeOut(view.renderResults);
           } else {
             view.renderResults();
@@ -120,12 +122,14 @@
 
       ResultsView.prototype.initialize = function() {
         this.classifieds = new ClassifiedsView();
+        this.priceChart = new PriceChartView();
         return this;
       };
 
       ResultsView.prototype.render = function() {
         $(this.el).html(this.template());
         this.$('#classifiedsContainer').html(this.classifieds.render().el);
+        this.priceChart.render();
         return this;
       };
 
@@ -186,6 +190,45 @@
       };
 
       return ClassifiedView;
+
+    })(Backbone.View);
+    PriceChartView = (function(_super) {
+
+      __extends(PriceChartView, _super);
+
+      function PriceChartView() {
+        return PriceChartView.__super__.constructor.apply(this, arguments);
+      }
+
+      PriceChartView.prototype.tagName = 'div';
+
+      PriceChartView.prototype.initialize = function() {
+        return this;
+      };
+
+      PriceChartView.prototype.render = function() {
+        $(this.el).empty();
+        this.drawChart();
+        return this;
+      };
+
+      PriceChartView.prototype.drawChart = function() {
+        var formatDate, that;
+        that = this;
+        formatDate = d3.time.format("%b %Y");
+        this.chart = app.priceChart().x(function(d) {
+          return formatDate.parse(d.date);
+        }).y(function(d) {
+          return +d.price;
+        });
+        d3.csv('clioPrices.csv', function(data) {
+          d3.select("#graph").datum(data).call(that.chart);
+          return this;
+        });
+        return this;
+      };
+
+      return PriceChartView;
 
     })(Backbone.View);
     this.app = (_ref = window.app) != null ? _ref : {};
