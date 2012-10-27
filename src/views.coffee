@@ -3,21 +3,25 @@ jQuery ->
 		el: 'body'
 		template: _.template($('#homeview-template').html())
 		events:
-			'click #search': 'search'
+			'click #search': 'navigateToSearch'
 			'click #titleText' : 'renderControls'
 		initialize: ->
 			_.bindAll @
 			@titleView = new TitleView()
 			@searchView = new SearchView()
 			@resultsView = new ResultsView()
+			@footerView = new FooterView()
 		render: ->
 			$(@el).html @template()
 			@$('#contents').append @titleView.render().el
+			$(@el).append @footerView.render().el
 			@
 		renderControls: ->
 			#$('#resultsView').fadeOut()
 			@$('#contents').append @searchView.render().el
 			@
+		navigateToSearch: ->
+			app.router.navigate('searchTest', true)
 		search: (make, model, year, mileage) ->
 			view = @
 			#make the 'headspace' smaller
@@ -38,6 +42,12 @@ jQuery ->
 			@$('#contents').append @resultsView.render().el
 			@
 
+	class FooterView extends Backbone.View
+		tagName: 'footer'
+		template: _.template($('#footer-template').html())
+		render: ->
+			$(@el).html @template()
+			@
 
 	class TitleView extends Backbone.View
 		id: 'titleView'
@@ -81,7 +91,7 @@ jQuery ->
 
 	class ClassifiedView extends Backbone.View
 		tagName: 'li'
-		className: 'span2'
+		className: 'span3'
 		template: _.template($('#classified-template').html())
 		render:->
 			$(@el).html @template(@model.toJSON())

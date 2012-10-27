@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   jQuery(function() {
-    var AppView, ClassifiedView, ClassifiedsView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
+    var AppView, ClassifiedView, ClassifiedsView, FooterView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
     AppView = (function(_super) {
 
       __extends(AppView, _super);
@@ -17,7 +17,7 @@
       AppView.prototype.template = _.template($('#homeview-template').html());
 
       AppView.prototype.events = {
-        'click #search': 'search',
+        'click #search': 'navigateToSearch',
         'click #titleText': 'renderControls'
       };
 
@@ -25,18 +25,24 @@
         _.bindAll(this);
         this.titleView = new TitleView();
         this.searchView = new SearchView();
-        return this.resultsView = new ResultsView();
+        this.resultsView = new ResultsView();
+        return this.footerView = new FooterView();
       };
 
       AppView.prototype.render = function() {
         $(this.el).html(this.template());
         this.$('#contents').append(this.titleView.render().el);
+        $(this.el).append(this.footerView.render().el);
         return this;
       };
 
       AppView.prototype.renderControls = function() {
         this.$('#contents').append(this.searchView.render().el);
         return this;
+      };
+
+      AppView.prototype.navigateToSearch = function() {
+        return app.router.navigate('searchTest', true);
       };
 
       AppView.prototype.search = function(make, model, year, mileage) {
@@ -65,6 +71,26 @@
       };
 
       return AppView;
+
+    })(Backbone.View);
+    FooterView = (function(_super) {
+
+      __extends(FooterView, _super);
+
+      function FooterView() {
+        return FooterView.__super__.constructor.apply(this, arguments);
+      }
+
+      FooterView.prototype.tagName = 'footer';
+
+      FooterView.prototype.template = _.template($('#footer-template').html());
+
+      FooterView.prototype.render = function() {
+        $(this.el).html(this.template());
+        return this;
+      };
+
+      return FooterView;
 
     })(Backbone.View);
     TitleView = (function(_super) {
@@ -178,7 +204,7 @@
 
       ClassifiedView.prototype.tagName = 'li';
 
-      ClassifiedView.prototype.className = 'span2';
+      ClassifiedView.prototype.className = 'span3';
 
       ClassifiedView.prototype.template = _.template($('#classified-template').html());
 
