@@ -4,12 +4,13 @@ jQuery ->
 		template: _.template($('#homeview-template').html())
 		events:
 			'click #search': 'navigateToSearch'
-			'click #titleText' : 'renderControls'
+			'click #titleText' : 'navigateToHome'
 		initialize: ->
 			_.bindAll @
 			@titleView = new TitleView()
 			@searchView = new SearchView()
 			@resultsView = new ResultsView()
+			@explanationView = new ExplanationView()
 			@footerView = new FooterView()
 		render: ->
 			$(@el).html @template()
@@ -17,11 +18,19 @@ jQuery ->
 			$(@el).append @footerView.render().el
 			@
 		renderControls: ->
-			#$('#resultsView').fadeOut()
 			@$('#contents').append @searchView.render().el
+			@$('#contents').append @explanationView.render().el
 			@
 		navigateToSearch: ->
-			app.router.navigate('searchTest', true)
+			make = @$('select#make').val()
+			model = @$('select#model').val()
+			year = @$('select#year').val()
+			mileage = @$('select#mileage').val()
+			url = 'search/' + make + '/' + model + '/' + year + '/' + mileage
+			app.router.navigate(url , true)
+			@
+		navigateToHome: ->
+			app.router.navigate('', true)
 		search: (make, model, year, mileage) ->
 			view = @
 			#make the 'headspace' smaller
@@ -29,6 +38,7 @@ jQuery ->
 				#hide the search controls
 				console.log $('#searchControls')
 				$('#subTitle').fadeOut()
+				$('#explanationView').fadeOut()
 				if $('#searchControls').length > 0
 					$('#subTitle').fadeOut()
 					$('#searchControls').fadeOut view.renderResults
@@ -45,6 +55,13 @@ jQuery ->
 	class FooterView extends Backbone.View
 		tagName: 'footer'
 		template: _.template($('#footer-template').html())
+		render: ->
+			$(@el).html @template()
+			@
+
+	class ExplanationView extends Backbone.View
+		id: 'explanationView'
+		template: _.template($('#explanation-template').html())
 		render: ->
 			$(@el).html @template()
 			@

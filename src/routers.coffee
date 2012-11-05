@@ -3,7 +3,7 @@ jQuery ->
 	class CarPriceFinderRouter extends Backbone.Router
 		routes:
 			'' : 'homeScreen'
-			'/search/:make/:model/:year/:mileage' :  'search'
+			'search/:make/:model/:year/:mileage' :  'search'
 			'searchTest' : 'searchTest'
 			
 		initialize: ->

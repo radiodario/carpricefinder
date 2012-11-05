@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   jQuery(function() {
-    var AppView, ClassifiedView, ClassifiedsView, FooterView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
+    var AppView, ClassifiedView, ClassifiedsView, ExplanationView, FooterView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
     AppView = (function(_super) {
 
       __extends(AppView, _super);
@@ -18,7 +18,7 @@
 
       AppView.prototype.events = {
         'click #search': 'navigateToSearch',
-        'click #titleText': 'renderControls'
+        'click #titleText': 'navigateToHome'
       };
 
       AppView.prototype.initialize = function() {
@@ -26,6 +26,7 @@
         this.titleView = new TitleView();
         this.searchView = new SearchView();
         this.resultsView = new ResultsView();
+        this.explanationView = new ExplanationView();
         return this.footerView = new FooterView();
       };
 
@@ -38,11 +39,23 @@
 
       AppView.prototype.renderControls = function() {
         this.$('#contents').append(this.searchView.render().el);
+        this.$('#contents').append(this.explanationView.render().el);
         return this;
       };
 
       AppView.prototype.navigateToSearch = function() {
-        return app.router.navigate('searchTest', true);
+        var make, mileage, model, url, year;
+        make = this.$('select#make').val();
+        model = this.$('select#model').val();
+        year = this.$('select#year').val();
+        mileage = this.$('select#mileage').val();
+        url = 'search/' + make + '/' + model + '/' + year + '/' + mileage;
+        app.router.navigate(url, true);
+        return this;
+      };
+
+      AppView.prototype.navigateToHome = function() {
+        return app.router.navigate('', true);
       };
 
       AppView.prototype.search = function(make, model, year, mileage) {
@@ -53,6 +66,7 @@
         }, function() {
           console.log($('#searchControls'));
           $('#subTitle').fadeOut();
+          $('#explanationView').fadeOut();
           if ($('#searchControls').length > 0) {
             $('#subTitle').fadeOut();
             $('#searchControls').fadeOut(view.renderResults);
@@ -91,6 +105,26 @@
       };
 
       return FooterView;
+
+    })(Backbone.View);
+    ExplanationView = (function(_super) {
+
+      __extends(ExplanationView, _super);
+
+      function ExplanationView() {
+        return ExplanationView.__super__.constructor.apply(this, arguments);
+      }
+
+      ExplanationView.prototype.id = 'explanationView';
+
+      ExplanationView.prototype.template = _.template($('#explanation-template').html());
+
+      ExplanationView.prototype.render = function() {
+        $(this.el).html(this.template());
+        return this;
+      };
+
+      return ExplanationView;
 
     })(Backbone.View);
     TitleView = (function(_super) {

@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <title></title>
+        <title>Car Price Finder</title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width"/>
         <link rel="stylesheet" href="styles/main.css"/>
@@ -47,7 +47,9 @@
             <div id="headerspace" class="hidden-phone"></div>
             <div id="title" class="row">
                 <div class="span6">
-                    <h1 id="titleText"><a href="/">Car Price Finder <img src="/images/car.svg" class="hidden-phone"></a></h1>
+                    <h1 id="titleText">
+                        <a href="/">Car Price Finder <img src="images/car.svg" class="hidden-phone"></a>
+                    </h1>
                     <p id="subTitle" class="lead hidden-phone">
                         Search the market value of any second-hand car
                     </p>
@@ -56,12 +58,23 @@
 
         </script>
         
-        <script type="text/template" id="explanation-template"></script>
-            <div id="explanation">
-                <h3> How do we calculate the price?</h3>
+        <script type="text/template" id="explanation-template">
+            <div id="explanation" class="well">
+                <h3>What is this site?</h3>
                 <p>
-            </div>
+                   Gluten-free ethnic in, iphone whatever retro thundercats PBR laborum et selvage carles godard semiotics put a bird on it. PBR thundercats laboris craft beer. Semiotics street art beard banksy gluten-free odd future. Delectus consectetur you probably haven't heard of them incididunt bicycle rights laborum, voluptate proident. Odd future helvetica organic, reprehenderit lo-fi DIY occupy quis fanny pack sartorial nisi hoodie gluten-free master cleanse quinoa. Occaecat iphone marfa odio you probably haven't heard of them cray. Letterpress non marfa next level, PBR portland consequat.
+                </p>
+                <h3>How do we calculate the price?</h3>
+                <p>
+                    Occupy consectetur master cleanse stumptown irure, narwhal PBR direct trade ethical whatever chillwave qui. Tofu mustache reprehenderit master cleanse occaecat direct trade. Et irony laboris, typewriter shoreditch nisi in letterpress reprehenderit aute wolf incididunt ad. Magna you probably haven't heard of them jean shorts tattooed. Locavore hella odd future, squid dreamcatcher post-ironic ethical keffiyeh gluten-free DIY occaecat blog. Vinyl fugiat cray quinoa assumenda, sunt whatever dreamcatcher fap ethical. Tempor labore lo-fi ethical consectetur, terry richardson food truck 8-bit assumenda semiotics cosby sweater sustainable VHS banh mi kale chips.
+                </p>
+                <h3>Do you sell cars?</h3>
+                <p>
+                    Fap kale chips post-ironic quinoa mollit. Polaroid mlkshk ullamco, 3 wolf moon pinterest tumblr yr. Aesthetic cliche elit, do placeat nisi artisan typewriter brunch blog craft beer. Forage pour-over minim, yr polaroid gluten-free wolf sriracha skateboard pitchfork PBR. Polaroid seitan deserunt godard, proident bushwick shoreditch nulla lo-fi ullamco. Beard cray fap semiotics, eiusmod yr qui. Terry richardson occupy sriracha tofu, tumblr in before they sold out pour-over cray.
+                </p>
 
+            </div>
+        </script>
         <script type="text/template" id="footer-template">
             <div class="container">
                 <p>Prototype for assignment 3 of the <a href="https://class.coursera.org/hci-2012-002/class/index" rel="external">Human-Computer Interaction class</a> from coursera. Built by <a href="http://alolo.co/" rel="author">Dario Villanueva</a>. Uses <a href="http://twitter.github.com/bootstrap/" rel="external">Twitter Bootstrap</a> and <a href="http://backbonejs.org" rel="external">Backbone.js</a>.</p>
@@ -70,24 +83,48 @@
 
         <script type="text/template" id="search-template"> 
             <div class="row">
-                <div class="span1">
-                    <h4>Year:<h4/>
-                    <select id='year' class="span1"></select>
-                </div>
                 <div class="span2">
                     <h4>Make:</h4>
                     
-                    <select id='make' class="span2"></select>
+                    <select id='make' class="span2">
+                        <option>Renault</option>
+                    </select>
                     
                 </div>
                 <div class="span2">
                     <h4>Model:</h4>
-                    <select id='model' class="span2"></select>
+                    <select id='model' class="span2">
+                        <option>Clio</option>
+                    </select>
                     
+                </div>
+                <div class="span1">
+                    <h4>Year:<h4/>
+                    <select id='year' class="span1">
+                        <option>2012</option>
+                        <option>2011</option>
+                        <option>2010</option>
+                        <option>2009</option>
+                        <option>2008</option>
+                        <option>2007</option>
+                        <option>2006</option>
+                        <option>2005</option>
+                        <option>2004</option>
+                        <option>2003</option>
+                        <option>2002</option>
+                        <option>2001</option>
+                        <option>2000</option>
+                    </select>
                 </div>
                 <div class="span2">
                     <h4>Mileage:</h4>
-                    <select id='mileage' class="span2"></select>
+                    <select id='mileage' class="span2">
+                        <option>200000</option>
+                        <option>150000</option>
+                        <option>100000</option>
+                        <option>50000</option>
+                        <option>10000</option>
+                    </select>
                     </label>
                 </div>
                 
@@ -120,7 +157,7 @@
                         </div>
                     </div>                
                     <div id="carImage" class="span6">
-                        <img src="/images/clio.png" class="img-polaroid">
+                        <img src="images/clio.png" class="img-polaroid">
                     </div>
                     
                 </div>
@@ -130,7 +167,7 @@
                 </div>
                 <div class="row">
                     <div id="classifiedsTitle" class="span12">
-                    <h3>Classified Ads</h3>
+                    <h3>Classified Ads From Other Sites</h3>
                     </div>
                 <div class="row">
                     <div class="span12">
@@ -144,9 +181,9 @@
             <div class="thumbnail">
                 <img src="http://placehold.it/300x200" alt="">
                 <div class="caption">
-                <h4><%= price %></h4>
-                <p><%= description %></p>
-                <p><a href="<%= link %>" class="btn btn-primary">go!</a></p>
+                    <h4><%= price %></h4>
+                    <p><%= description %></p>
+                    <p><a href="<%= link %>" class="btn btn-primary">go!</a></p>
                 </div>
             </div>
         </script>
