@@ -14,10 +14,13 @@ jQuery ->
 		homeScreen: ->
 			console.log 'rendering'
 			@view.renderControls()
+			@view.renderExplanation()
+			@
 
 		searchTest: ->
 			console.log 'rendering results'
 			@view.search()
+			@
 
 		search: (make, model, year, mileage) ->
 			@view.search(make, model, year, mileage)

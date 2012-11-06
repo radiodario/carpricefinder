@@ -25,12 +25,15 @@
 
       CarPriceFinderRouter.prototype.homeScreen = function() {
         console.log('rendering');
-        return this.view.renderControls();
+        this.view.renderControls();
+        this.view.renderExplanation();
+        return this;
       };
 
       CarPriceFinderRouter.prototype.searchTest = function() {
         console.log('rendering results');
-        return this.view.search();
+        this.view.search();
+        return this;
       };
 
       CarPriceFinderRouter.prototype.search = function(make, model, year, mileage) {

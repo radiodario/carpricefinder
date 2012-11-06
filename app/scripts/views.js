@@ -18,7 +18,8 @@
 
       AppView.prototype.events = {
         'click #search': 'navigateToSearch',
-        'click #titleText': 'navigateToHome'
+        'click #titleText': 'navigateToHome',
+        'click #newSearch': 'renderControls'
       };
 
       AppView.prototype.initialize = function() {
@@ -33,12 +34,18 @@
       AppView.prototype.render = function() {
         $(this.el).html(this.template());
         this.$('#contents').append(this.titleView.render().el);
+        this.$('#controls').append(this.searchView.render().el);
         $(this.el).append(this.footerView.render().el);
         return this;
       };
 
       AppView.prototype.renderControls = function() {
-        this.$('#contents').append(this.searchView.render().el);
+        this.$('#searchControls').show();
+        this.hideResults();
+        return this;
+      };
+
+      AppView.prototype.renderExplanation = function() {
         this.$('#contents').append(this.explanationView.render().el);
         return this;
       };
@@ -50,17 +57,19 @@
         year = this.$('select#year').val();
         mileage = this.$('select#mileage').val();
         url = 'search/' + make + '/' + model + '/' + year + '/' + mileage;
-        app.router.navigate(url, true);
+        app.router.navigate(url, false);
+        this.search(make, model, year, mileage);
         return this;
       };
 
       AppView.prototype.navigateToHome = function() {
-        return app.router.navigate('', true);
+        return app.router.navigate('/', true);
       };
 
       AppView.prototype.search = function(make, model, year, mileage) {
         var view;
         view = this;
+        console.log("processing search");
         this.$('#headerspace').animate({
           'margin-top': '20px'
         }, function() {
@@ -80,8 +89,15 @@
 
       AppView.prototype.renderResults = function() {
         console.log('woah', this);
+        this.resultsView = new ResultsView({
+          model: new app.CarData()
+        });
         this.$('#contents').append(this.resultsView.render().el);
         return this;
+      };
+
+      AppView.prototype.hideResults = function() {
+        return this.resultsView.hide();
       };
 
       return AppView;
@@ -186,10 +202,18 @@
       };
 
       ResultsView.prototype.render = function() {
-        $(this.el).html(this.template());
+        $(this.el).html(this.template(this.model.toJSON()));
         this.$('#classifiedsContainer').html(this.classifieds.render().el);
         this.priceChart.render();
         return this;
+      };
+
+      ResultsView.prototype.hide = function() {
+        var dat;
+        dat = this;
+        return $(this.el).fadeOut(function() {
+          return $(dat.el).remove();
+        });
       };
 
       return ResultsView;
@@ -261,36 +285,27 @@
       PriceChartView.prototype.el = '#graph';
 
       PriceChartView.prototype.initialize = function() {
-        $(window).on("resize.app", _.bind(this.update, this));
-        return this;
-      };
-
-      PriceChartView.prototype.render = function() {
-        var callback, that;
-        $(this.el).empty();
-        this.drawChart();
-        that = this;
-        callback = function() {
-          return that.update();
-        };
-        setTimeout(callback, 1);
-        return this;
-      };
-
-      PriceChartView.prototype.drawChart = function() {
         var formatDate;
+        $(window).on("resize.app", _.bind(this.update, this));
         formatDate = d3.time.format("%b %Y");
         this.chart = app.priceChart().x(function(d) {
           return formatDate.parse(d.date);
         }).y(function(d) {
           return +d.price;
         });
+        return this;
+      };
+
+      PriceChartView.prototype.render = function() {
+        console.log("rendering price chart view", $(this.el));
         this.draw();
         return this;
       };
 
       PriceChartView.prototype.update = function() {
-        this.chart.width($('#graph').width() - 2);
+        if (this.chart != null) {
+          this.chart.width($('#graph').width() - 2);
+        }
         this.draw();
         return this;
       };
@@ -299,6 +314,7 @@
         var that;
         that = this;
         d3.csv('clioPrices.csv', function(data) {
+          console.log("hey drawing chart", d3.select('#graph'), that.chart);
           d3.select("#graph").datum(data).call(that.chart);
           return this;
         });

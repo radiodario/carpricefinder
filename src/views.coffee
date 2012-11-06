@@ -5,6 +5,7 @@ jQuery ->
 		events:
 			'click #search': 'navigateToSearch'
 			'click #titleText' : 'navigateToHome'
+			'click #newSearch' : 'renderControls'
 		initialize: ->
 			_.bindAll @
 			@titleView = new TitleView()
@@ -15,10 +16,14 @@ jQuery ->
 		render: ->
 			$(@el).html @template()
 			@$('#contents').append @titleView.render().el
+			@$('#controls').append @searchView.render().el
 			$(@el).append @footerView.render().el
 			@
 		renderControls: ->
-			@$('#contents').append @searchView.render().el
+			@$('#searchControls').show()
+			@hideResults()
+			@
+		renderExplanation: ->
 			@$('#contents').append @explanationView.render().el
 			@
 		navigateToSearch: ->
@@ -27,12 +32,14 @@ jQuery ->
 			year = @$('select#year').val()
 			mileage = @$('select#mileage').val()
 			url = 'search/' + make + '/' + model + '/' + year + '/' + mileage
-			app.router.navigate(url , true)
+			app.router.navigate(url , false)
+			@search(make, model, year, mileage)
 			@
 		navigateToHome: ->
-			app.router.navigate('', true)
+			app.router.navigate('/', true)
 		search: (make, model, year, mileage) ->
 			view = @
+			console.log("processing search")
 			#make the 'headspace' smaller
 			@$('#headerspace').animate {'margin-top': '20px'}, ->
 				#hide the search controls
@@ -49,8 +56,12 @@ jQuery ->
 			@
 		renderResults: ->
 			console.log 'woah', @
+			@resultsView = new ResultsView(model: new app.CarData())
 			@$('#contents').append @resultsView.render().el
 			@
+		hideResults: ->
+			@resultsView.hide()
+
 
 	class FooterView extends Backbone.View
 		tagName: 'footer'
@@ -89,10 +100,15 @@ jQuery ->
 			@priceChart = new PriceChartView()
 			@
 		render: ->
-			$(@el).html @template()
+			$(@el).html @template(@model.toJSON())
 			@$('#classifiedsContainer').html @classifieds.render().el
 			@priceChart.render()
 			@
+		hide: ->
+			dat = @
+			$(@el).fadeOut( () ->
+				$(dat.el).remove()
+				)
 
 	class ClassifiedsView extends Backbone.View
 		tagName: 'ul'
@@ -118,30 +134,29 @@ jQuery ->
 		el: '#graph'
 		initialize: ->
 			$(window).on("resize.app", _.bind(@update, @))
-			@
-		render: ->
-			$(@el).empty()
-			@drawChart()
-			that = @
-			callback = () -> that.update()
-			setTimeout callback, 1
-			@
-		drawChart: ->
 			formatDate = d3.time.format("%b %Y")
 			@chart = app.priceChart()
 				.x((d) -> formatDate.parse(d.date))
 				.y((d) -> +d.price)
+			@
+		render: ->
+			console.log "rendering price chart view", $(@el)
+			#$(@el).empty()
+			# that = @
+			# callback = () -> that.draw()
+			# setTimeout callback, 1
 			@draw()
 			@
-
 		update:->
-			@chart
-				.width($('#graph').width()-2)
+			if @chart?
+				@chart
+					.width($('#graph').width()-2)
 			@draw()
 			@
 		draw: ->
 			that = @
 			d3.csv('clioPrices.csv', (data) ->
+					console.log("hey drawing chart", d3.select('#graph'), that.chart)
 					d3.select("#graph")
 						.datum(data)
 						.call(that.chart)

@@ -55,6 +55,8 @@
                     </p>
                 </div>
             </div>
+            <div id="controls">
+            </div>
 
         </script>
         
@@ -66,7 +68,7 @@
                 </p>
                 <h3>How do we calculate the price?</h3>
                 <p>
-                    Occupy consectetur master cleanse stumptown irure, narwhal PBR direct trade ethical whatever chillwave qui. Tofu mustache reprehenderit master cleanse occaecat direct trade. Et irony laboris, typewriter shoreditch nisi in letterpress reprehenderit aute wolf incididunt ad. Magna you probably haven't heard of them jean shorts tattooed. Locavore hella odd future, squid dreamcatcher post-ironic ethical keffiyeh gluten-free DIY occaecat blog. Vinyl fugiat cray quinoa assumenda, sunt whatever dreamcatcher fap ethical. Tempor labore lo-fi ethical consectetur, terry richardson food truck 8-bit assumenda semiotics cosby sweater sustainable VHS banh mi kale chips.
+                    Occupy consectetur master cleanse stumptown irure, narwhal PBR direct trade ethical whatever chillwave qui. Tofu mustache reprehenderit master cleanse occaecat direct trade. Et irony laboris, typewriter shoreditch nisi in letterpress reprehenderit aute wolf incididunt ad. Magna you probably have not heard of them jean shorts tattooed. Locavore hella odd future, squid dreamcatcher post-ironic ethical keffiyeh gluten-free DIY occaecat blog. Vinyl fugiat cray quinoa assumenda, sunt whatever dreamcatcher fap ethical. Tempor labore lo-fi ethical consectetur, terry richardson food truck 8-bit assumenda semiotics cosby sweater sustainable VHS banh mi kale chips.
                 </p>
                 <h3>Do you sell cars?</h3>
                 <p>
@@ -142,14 +144,23 @@
                     <div id="carInfo" class="span5">
                         <div class="row">
                             <p class="lead span5">
-                            1999 Renault Clio <span class="hidden-phone">with</span> 100,000 miles
+                            <%= year %> <%= make %> <%= model %> <%= subModel %> <span class="hidden-phone">with</span> <%= miles %> miles
                             </p>
                         </div>
                         <div class="row">
-                            <p class="price span5">£1,280</p>
-                            <p class="small span5">
-                                (approx price)
-                            </p>
+                            <div class="span3">
+                                <p class="price">£<%= price %></p>
+                                <p class="small muted pull-right">
+                                 (price approx)
+                                </p>
+                            </div>
+                            <div class="span2">
+                                <ul class="nav nav-list">
+                                    <li><a><i class="icon-star"></i>link to this search</a></li>
+                                    <li><a><i class="icon-share"></i>share search</a></li>
+                                    <li><a id="newSearch"><i class="icon-search"></i>new search</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="row">
                             <div id="graph" class="span5 img-polaroid">
@@ -157,7 +168,7 @@
                         </div>
                     </div>                
                     <div id="carImage" class="span6">
-                        <img src="images/clio.png" class="img-polaroid">
+                        <img src="<%= image %>" class="img-polaroid">
                     </div>
                     
                 </div>
