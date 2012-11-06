@@ -10,7 +10,7 @@
       left: 50
     };
     width = 460;
-    height = 312;
+    height = 280;
     xValue = function(d) {
       return d[0];
     };

@@ -7,7 +7,7 @@ priceChart = () ->
 		bottom: 70
 		left: 50
 	width = 460
-	height = 312
+	height = 280
 	xValue = (d) -> d[0]
 	yValue = (d) -> d[1]
 	xScale = d3.time.scale()
