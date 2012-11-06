@@ -11,52 +11,20 @@
       return Classifieds.__super__.constructor.apply(this, arguments);
     }
 
-    Classifieds.prototype.model = app.Classified;
-
-    Classifieds.prototype.initialize = function(options) {};
+    Classifieds.prototype.url = '/cars.json';
 
     return Classifieds;
 
   })(Backbone.Collection);
 
+  ({
+    model: app.Classified
+  });
+
   this.app = (_ref = window.app) != null ? _ref : {};
 
   this.app.Classifieds = Classifieds;
 
-  this.app.classifieds = new Classifieds([
-    {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }, {
-      price: "£900",
-      description: "Clio 197 R27 F1 (44/500) made for UK, Black, 49,000 Miles, AC, Xenon cornering head lights, ITG Panel filter",
-      link: "#"
-    }
-  ]);
+  this.app.classifieds = new Classifieds();
 
 }).call(this);

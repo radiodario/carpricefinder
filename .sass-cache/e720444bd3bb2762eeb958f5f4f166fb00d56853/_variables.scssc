@@ -1,8 +1,8 @@
 3.2.1 (Media Mark)
-62ac52c9829d877942af6e94a4aa31ffe69717ef
+26712db02387d3f9b3cbe518eefa027cca8cea56
 o:Sass::Tree::RootNode
 :
-@linei:@template"Î%//
+@linei:@template"Ô%//
 // Variables
 // --------------------------------------------------
 
@@ -137,8 +137,8 @@ $zindexModal:             1050 !default;
 
 // Sprite icons path
 // -------------------------
-$iconSpritePath:          "../img/glyphicons-halflings.png" !default;
-$iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png" !default;
+$iconSpritePath:          "../images/glyphicons-halflings.png" !default;
+$iconWhiteSpritePath:     "../images/glyphicons-halflings-white.png" !default;
 
 
 // Input placeholder text color
@@ -434,8 +434,8 @@ white;	@;	@;
 [ o;
 ;;;i†;	@;
 [ ;["9/* Sprite icons path
- * ------------------------- */o;;"!default;"iconSpritePath;iˆ;o;&	;;';iˆ;	@;"$../img/glyphicons-halflings.png;	@;
-[ o;;"!default;"iconWhiteSpritePath;i‰;o;&	;;';i‰;	@;"*../img/glyphicons-halflings-white.png;	@;
+ * ------------------------- */o;;"!default;"iconSpritePath;iˆ;o;&	;;';iˆ;	@;"'../images/glyphicons-halflings.png;	@;
+[ o;;"!default;"iconWhiteSpritePath;i‰;o;&	;;';i‰;	@;"-../images/glyphicons-halflings-white.png;	@;
 [ o;
 ;;;iŒ;	@;
 [ ;["D/* Input placeholder text color

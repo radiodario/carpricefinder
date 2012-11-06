@@ -190,13 +190,18 @@
 
         <script type="text/template" id="classified-template">
             <div class="thumbnail">
-                <img src="http://placehold.it/300x200" alt="">
+                <img width="150px" src="<%= img %>" alt="" class="img-rounded">
                 <div class="caption">
                     <h4><%= price %></h4>
-                    <p><%= description %></p>
-                    <p><a href="<%= link %>" class="btn btn-primary">go!</a></p>
+                    <p><small><%= description %></small></p>
+                    <p><a href="http://classifieds.pistonheads.com<%= adURL %>" class="btn btn-primary">go!</a></p>
                 </div>
             </div>
+        </script>        
+
+        <script type="text/template" id="classifieds-template">
+           <ul class="thumbnails" id="classifieds">
+           </ul>
         </script>
 
 

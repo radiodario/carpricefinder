@@ -196,14 +196,15 @@
       ResultsView.prototype.id = 'resultsView';
 
       ResultsView.prototype.initialize = function() {
-        this.classifieds = new ClassifiedsView();
-        this.priceChart = new PriceChartView();
         return this;
       };
 
       ResultsView.prototype.render = function() {
         $(this.el).html(this.template(this.model.toJSON()));
-        this.$('#classifiedsContainer').html(this.classifieds.render().el);
+        this.classifieds = new ClassifiedsView({
+          el: this.$('#classifiedsContainer')
+        });
+        this.priceChart = new PriceChartView();
         this.priceChart.render();
         return this;
       };
@@ -227,24 +228,26 @@
         return ClassifiedsView.__super__.constructor.apply(this, arguments);
       }
 
-      ClassifiedsView.prototype.tagName = 'ul';
-
-      ClassifiedsView.prototype.id = 'classifieds';
-
-      ClassifiedsView.prototype.className = 'thumbnails';
-
       ClassifiedsView.prototype.template = _.template($('#classifieds-template').html());
+
+      ClassifiedsView.prototype.initialize = function() {
+        this.collection = new app.Classifieds();
+        this.collection.bind('reset', this.render, this);
+        this.collection.fetch();
+        return this;
+      };
 
       ClassifiedsView.prototype.render = function() {
         var classified, classifiedView, _i, _len, _ref;
-        $(this.el).empty();
-        _ref = app.classifieds.models;
+        $(this.el).html(this.template());
+        console.log($(this.el));
+        _ref = this.collection.models;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           classified = _ref[_i];
           classifiedView = new ClassifiedView({
             model: classified
           });
-          $(this.el).append(classifiedView.render().el);
+          this.$('ul').append(classifiedView.render().el);
         }
         return this;
       };
@@ -314,7 +317,6 @@
         var that;
         that = this;
         d3.csv('clioPrices.csv', function(data) {
-          console.log("hey drawing chart", d3.select('#graph'), that.chart);
           d3.select("#graph").datum(data).call(that.chart);
           return this;
         });

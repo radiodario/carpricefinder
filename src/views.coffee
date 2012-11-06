@@ -96,12 +96,11 @@ jQuery ->
 		template: _.template($('#results-template').html())
 		id: 'resultsView'
 		initialize: ->
-			@classifieds = new ClassifiedsView()
-			@priceChart = new PriceChartView()
 			@
 		render: ->
 			$(@el).html @template(@model.toJSON())
-			@$('#classifiedsContainer').html @classifieds.render().el
+			@classifieds = new ClassifiedsView el: @$('#classifiedsContainer')
+			@priceChart = new PriceChartView()
 			@priceChart.render()
 			@
 		hide: ->
@@ -111,15 +110,19 @@ jQuery ->
 				)
 
 	class ClassifiedsView extends Backbone.View
-		tagName: 'ul'
-		id: 'classifieds'
-		className: 'thumbnails'
 		template: _.template($('#classifieds-template').html())
+		initialize: ->
+			@collection = new app.Classifieds()
+			@collection.bind 'reset', @render, @
+			@collection.fetch()
+			@
 		render: ->
-			$(@el).empty() # @template()
-			for classified in app.classifieds.models
+			$(@el).html @template()
+			console.log $(@el)
+			for classified in @collection.models
+				#console.log classified.toJSON()
 				classifiedView = new ClassifiedView (model: classified)
-				$(@el).append classifiedView.render().el
+				@$('ul').append classifiedView.render().el
 			@
 
 	class ClassifiedView extends Backbone.View
@@ -141,10 +144,6 @@ jQuery ->
 			@
 		render: ->
 			console.log "rendering price chart view", $(@el)
-			#$(@el).empty()
-			# that = @
-			# callback = () -> that.draw()
-			# setTimeout callback, 1
 			@draw()
 			@
 		update:->
@@ -156,7 +155,6 @@ jQuery ->
 		draw: ->
 			that = @
 			d3.csv('clioPrices.csv', (data) ->
-					console.log("hey drawing chart", d3.select('#graph'), that.chart)
 					d3.select("#graph")
 						.datum(data)
 						.call(that.chart)
