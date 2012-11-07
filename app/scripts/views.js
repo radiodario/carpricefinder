@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   jQuery(function() {
-    var AppView, ClassifiedView, ClassifiedsView, ExplanationView, FooterView, PriceChartView, ResultsView, SearchView, TitleView, _ref;
+    var AppView, ClassifiedView, ClassifiedsView, ExplanationView, FooterView, PriceChartView, ResultsView, SearchView, ShareView, TitleView, _ref;
     AppView = (function(_super) {
 
       __extends(AppView, _super);
@@ -18,8 +18,7 @@
 
       AppView.prototype.events = {
         'click #search': 'navigateToSearch',
-        'click #titleText': 'navigateToHome',
-        'click #newSearch': 'renderControls'
+        'click #titleText': 'navigateToHome'
       };
 
       AppView.prototype.initialize = function() {
@@ -28,7 +27,8 @@
         this.searchView = new SearchView();
         this.resultsView = new ResultsView();
         this.explanationView = new ExplanationView();
-        return this.footerView = new FooterView();
+        this.footerView = new FooterView();
+        return this;
       };
 
       AppView.prototype.render = function() {
@@ -93,6 +93,9 @@
           model: new app.CarData()
         });
         this.$('#contents').append(this.resultsView.render().el);
+        this.shareView = new ShareView({
+          model: new app.Share()
+        });
         return this;
       };
 
@@ -101,6 +104,34 @@
       };
 
       return AppView;
+
+    })(Backbone.View);
+    ShareView = (function(_super) {
+
+      __extends(ShareView, _super);
+
+      function ShareView() {
+        return ShareView.__super__.constructor.apply(this, arguments);
+      }
+
+      ShareView.prototype.el = 'body';
+
+      ShareView.prototype.template = _.template($('#sharing-template').html());
+
+      ShareView.prototype.initialize = function() {
+        this.model.bind('change', this.render, this);
+        this.render();
+        return this;
+      };
+
+      ShareView.prototype.render = function() {
+        $('#shareDialog').remove();
+        console.log();
+        $(this.el).append(this.template(this.model.toJSON()));
+        return this;
+      };
+
+      return ShareView;
 
     })(Backbone.View);
     FooterView = (function(_super) {

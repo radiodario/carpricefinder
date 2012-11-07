@@ -11,7 +11,7 @@
       return Classifieds.__super__.constructor.apply(this, arguments);
     }
 
-    Classifieds.prototype.url = '/cars.json';
+    Classifieds.prototype.url = 'cars.json';
 
     return Classifieds;
 

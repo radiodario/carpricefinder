@@ -2,6 +2,7 @@
 
 @app = window.app ? {}
 
+
 jQuery ->
 
 	@app.router = new @app.CarPriceFinderRouter

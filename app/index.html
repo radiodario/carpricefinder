@@ -24,6 +24,7 @@
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/bootstrap/bootstrap-transition.js"></script>
+        <script src="scripts/vendor/bootstrap/bootstrap-modal.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/d3.v2.js"></script>
         <script src="scripts/lineChart.js"></script>
@@ -156,9 +157,8 @@
                             </div>
                             <div class="span2">
                                 <ul class="nav nav-list">
-                                    <li><a><i class="icon-star"></i>link to this search</a></li>
-                                    <li><a><i class="icon-share"></i>share search</a></li>
-                                    <li><a id="newSearch"><i class="icon-search"></i>new search</a></li>
+                                    <li><a id="shareBtn" data-toggle="modal" href="#shareDialog"><i class="icon-share"></i>share search</a></li>
+                                    <li><a id="newSearch" href="#/"><i class="icon-search"></i>new search</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -204,7 +204,23 @@
            </ul>
         </script>
 
-
+        <script type="text/template" id="sharing-template">
+            <div id="shareDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="shareDialogLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Share This Price</h3>
+              </div>
+              <div class="modal-body">
+                <p>Copy this URL and paste it on your favorite Email Client or social Network to share this page</p>
+                <div class="well well-small">
+                    <%= link %>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+              </div>
+            </div>
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

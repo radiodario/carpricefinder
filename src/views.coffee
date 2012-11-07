@@ -5,7 +5,7 @@ jQuery ->
 		events:
 			'click #search': 'navigateToSearch'
 			'click #titleText' : 'navigateToHome'
-			'click #newSearch' : 'renderControls'
+			#'click #newSearch' : 'renderControls'
 		initialize: ->
 			_.bindAll @
 			@titleView = new TitleView()
@@ -13,6 +13,7 @@ jQuery ->
 			@resultsView = new ResultsView()
 			@explanationView = new ExplanationView()
 			@footerView = new FooterView()
+			@
 		render: ->
 			$(@el).html @template()
 			@$('#contents').append @titleView.render().el
@@ -58,9 +59,23 @@ jQuery ->
 			console.log 'woah', @
 			@resultsView = new ResultsView(model: new app.CarData())
 			@$('#contents').append @resultsView.render().el
+			@shareView = new ShareView( model: new app.Share() )
 			@
 		hideResults: ->
 			@resultsView.hide()
+
+	class ShareView extends Backbone.View
+		el: 'body'
+		template: _.template($('#sharing-template').html())
+		initialize: ->
+			@model.bind 'change', @render, @
+			@render()
+			@
+		render:->
+			$('#shareDialog').remove()
+			console.log()
+			$(@el).append @template(@model.toJSON())
+			@
 
 
 	class FooterView extends Backbone.View
