@@ -231,7 +231,10 @@
       };
 
       ResultsView.prototype.render = function() {
-        $(this.el).html(this.template(this.model.toJSON()));
+        var model;
+        model = this.model.toJSON();
+        model.searchLink = window.location.href;
+        $(this.el).html(this.template(model));
         this.classifieds = new ClassifiedsView({
           el: this.$('#classifiedsContainer')
         });

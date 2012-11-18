@@ -113,7 +113,9 @@ jQuery ->
 		initialize: ->
 			@
 		render: ->
-			$(@el).html @template(@model.toJSON())
+			model = @model.toJSON()
+			model.searchLink = window.location.href
+			$(@el).html @template(model)
 			@classifieds = new ClassifiedsView el: @$('#classifiedsContainer')
 			@priceChart = new PriceChartView()
 			@priceChart.render()
